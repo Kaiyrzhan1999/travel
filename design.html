@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travellers Coffee Design</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&display=swap');
+
+        :root {
+            --primary-color: #FF8C00;
+            --secondary-color: #8B4513;
+            --accent-color: #FFD700;
+            --text-color: #ffffff;
+            --background-color: #FF8C00;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            overflow: hidden;
+        }
+
+        .design-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('element.png');
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.8;
+            mix-blend-mode: multiply;
+            animation: backgroundMove 60s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 200px; }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.5) 100%);
+            z-index: 1;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-color);
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .logo {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tagline {
+            font-size: 2.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        .tagline span {
+            display: block;
+            font-size: 0.6em;
+            font-weight: 300;
+            margin-top: 20px;
+            color: var(--accent-color);
+            letter-spacing: 8px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .coffee-bean {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            transform: rotate(45deg);
+            animation: fallBean 5s linear;
+        }
+
+        @keyframes fallBean {
+            0% { transform: translateY(-50px) rotate(45deg); }
+            100% { transform: translateY(calc(100vh + 50px)) rotate(405deg); }
+        }
+
+        .bean-collector {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1.5s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--text-color);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .tagline {
+                font-size: 2em;
+            }
+
+            .coffee-bean {
+                width: 15px;
+                height: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 1.5em;
+            }
+
+            .coffee-bean {
+                width: 10px;
+                height: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="design-container">
+        <div class="background-elements"></div>
+        <div class="overlay"></div>
+        <div class="content">
+            <img src="icon.png" alt="Travellers Coffee Logo" class="logo">
+            <h1 class="tagline">ЕШЬ ПРАВИЛЬНО<span>ПУТЕШЕСТВУЙ ЧАСТО</span></h1>
+            <a href="#" class="cta-button">Начать путешествие</a>
+        </div>
+        <div class="bean-collector"></div>
+    </div>
+
+    <script>
+        function createBean() {
+            const bean = document.createElement('div');
+            bean.classList.add('coffee-bean');
+            bean.style.left = Math.random() * window.innerWidth + 'px';
+            document.querySelector('.design-container').appendChild(bean);
+
+            bean.addEventListener('animationend', () => {
+                bean.remove();
+            });
+        }
+
+        setInterval(createBean, Math.random() * 1000 + 1000);
+    </script>
+</body>
+</html>
